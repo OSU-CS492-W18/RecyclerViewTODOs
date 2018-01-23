@@ -1,7 +1,9 @@
 package com.example.android.recyclerviewtodos;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,6 +18,25 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder
 
     public TodoAdapter() {
         mTodoList = new ArrayList<String>();
+    }
+
+    @Override
+    public TodoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.todo_list_item, parent, false);
+        TodoViewHolder viewHolder = new TodoViewHolder(view);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(TodoViewHolder holder, int position) {
+        String todo = mTodoList.get(mTodoList.size() - position - 1);
+        holder.bind(todo);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mTodoList.size();
     }
 
     public void addTodo(String todo) {
